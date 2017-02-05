@@ -1,69 +1,48 @@
 $(document).ready(function() {
   $("#car_reg_btn").on("click", function() {
     $(".car_reg").hide();
-
     function car_result() {
       var speed = 0;
       return {
         make:$("#make").val(),
         model:$("#model").val(),
-        year:$("#year").val(),
+        year: $("#year").val(),
         getSpeed: function() {return speed;},
-        accelerate: function() {speed = speed+10;},
-        brake: function() {speed = speed - 7;}
+        accelerate: function() {
+          if (speed < 85 ) {
+            speed += 10;
+            $("#p_speed").addClass("p_speed");
+          } else if (speed > 60 && speed < 90) {
+            $("#p_speed").addClass("warning");
+            speed -= 7;
+          } else {
+          speed -= 7;
+          }
+        },
+        brake: function() {
+          if (speed <= -7) {
+            speed = 0;
+          } else if (speed-7 < 0) {
+            speed = 0;
+          } else {
+            speed -= 7;
+          }
+        }
       }
     }
-    $("#increase").on("click", function(){
-      console.log("hello world")
-      car_result.accelerate;
-      $("#p_speed").text(car_result.getSpeed());
-    });
-    $("#decrease").on("click", function(){
-        car_result.brake;
+
+    var car1 = car_result( $("#make").val(), $("#model").val(), $("#year").val() );
+
+    $("p:first").text("Your car registration information is: " + car1.make + " " + car1.model + " " + car1.year);
+
+    $("#increase").on("click", function() {
+      car1.accelerate();
+      $("#p_speed").text(car1.getSpeed()+" mph");
     });
 
-    $("p:first").text("Your car registration information is: " + car_result.make + " " + car_result.model + " " + car_result.year);
+    $("#decrease").on("click", function(){
+      car1.brake();
+      $("#p_speed").text(car1.getSpeed()+" mph");
   });
 });
-
-var car1 = ("")
-
-//
-// function carObject(make, modelYear,color){
-//   var speed = 0;
-//   return{
-//     make:make,
-//     modelYear:modelYear,
-//     color:color,
-//     getData:function(){return this.make + " " + this.modelYear+ " "+ this.color},
-//     getSpeed: function () {return speed},
-//     accelerate: function () {speed = speed+10},
-//     brake: function () {
-//       if (speed < 0) {
-//         speed = 0;
-//       } else {
-//         speed = speed-7;
-//       }
-//     }
-//   }
-// }
-// var car1 = carObject("Lexus","2014","Hot Pink");
-//
-//
-// while (car1.getSpeed() <= 85){
-//     car1.accelerate();
-//     }
-//     if (car1.getSpeed() > 85) {
-//       car1.brake();
-//     }
-//
-// var drivingSpeed = car1.getSpeed();
-//
-// while (car1.getSpeed() >= -7){
-//   console.log(car1.getSpeed());
-//   if(car1.getSpeed()===0){
-//     break;
-//   }
-//   car1.brake();
-//   console.log(car1.getSpeed());
-// }
+});

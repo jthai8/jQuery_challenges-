@@ -1,0 +1,8 @@
+#p_speed {
+  color: black;
+}
+
+/*added a class to this id in css but not in HTML file to specify warning color*/
+#p_speed.warning {
+  color:red;
+}
