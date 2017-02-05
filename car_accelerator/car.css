@@ -2,7 +2,7 @@
   color: black;
 }
 
-/*added a class to this id in css but not in HTML file to specify warning color*/
+/*added a class to this id in css but not in HTML file to specify warning color when speed was too high, still need to work out kinks*/
 #p_speed.warning {
   color:red;
 }
